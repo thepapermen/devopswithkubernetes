@@ -1,22 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: logoutput-dep
+  name: pingpong-dep
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: logoutput
+      app: pingpong
   template:
     metadata:
       labels:
-        app: logoutput
+        app: pingpong
     spec:
       containers:
-        - name: logoutput
-          image: thepapermen/devopswithkubernetes:log_output-0.2.1-alpine
+        - name: pingpong
+          image: thepapermen/devopswithkubernetes:ping_pong-0.1.4-alpine
           env:
             - name: HOST
               value: "0.0.0.0"
             - name: PORT
               value: "3000"
+            - name: ENDPOINT_URL
+              value: "/pingpong"

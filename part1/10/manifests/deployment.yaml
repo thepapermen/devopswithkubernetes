@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logoutput-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logoutput
+  template:
+    metadata:
+      labels:
+        app: logoutput
+    spec:
+      volumes:
+        - name: shared-logoutput
+          emptyDir: {}
+      containers:
+        - name: showoutput
+          image: thepapermen/devopswithkubernetes:showoutput-0.3.0-alpine
+          volumeMounts:
+            - name: shared-logoutput
+              mountPath: /usr/src/app/files
+          env:
+            - name: HOST
+              value: "0.0.0.0"
+            - name: PORT
+              value: "3000"
+            - name: FILE_PATH
+              value: "/usr/src/app/files/output.txt"
+        - name: logoutput
+          image: thepapermen/devopswithkubernetes:log_output-0.3.0-alpine
+          volumeMounts:
+            - name: shared-logoutput
+              mountPath: /usr/src/app/files
+          env:
+            - name: FILE_PATH
+              value: "/usr/src/app/files/output.txt"
