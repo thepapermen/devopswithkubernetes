@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logoutput-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logoutput
+  template:
+    metadata:
+      labels:
+        app: logoutput
+    spec:
+      volumes:
+        - name: shared-pingpong
+          persistentVolumeClaim:
+            claimName: pingpong-claim
+            readOnly: true
+      containers:
+        - name: logoutput
+          image: thepapermen/devopswithkubernetes:log_output-0.4.1-alpine
+          volumeMounts:
+            - name: shared-pingpong
+              mountPath: /usr/src/app/files
+          env:
+            - name: HOST
+              value: "0.0.0.0"
+            - name: PORT
+              value: "3000"
+            - name: FILE_PATH
+              value: "/usr/src/app/files/pingpong.txt"

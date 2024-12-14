@@ -11,6 +11,8 @@ PORT = int(os.environ['PORT'])
 ENDPOINT_URL = os.environ['ENDPOINT_URL']
 FILE_PATH = os.environ['FILE_PATH']
 
+if not os.path.exists(FILE_PATH):
+    os.mknod(FILE_PATH)
 
 async def root_handler(request):
     async with async_open(FILE_PATH, 'r+') as afp:

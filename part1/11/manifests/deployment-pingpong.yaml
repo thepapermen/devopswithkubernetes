@@ -12,18 +12,16 @@ spec:
       labels:
         app: pingpong
     spec:
+      volumes:
+        - name: shared-pingpong
+          persistentVolumeClaim:
+            claimName: pingpong-claim
       containers:
-        - name: showoutput
-          image: thepapermen/devopswithkubernetes:showoutput-0.4.0-alpine
-          env:
-            - name: HOST
-              value: "0.0.0.0"
-            - name: PORT
-              value: "3000"
-            - name: FILE_PATH
-              value: "/"
         - name: pingpong
-          image: thepapermen/devopswithkubernetes:ping_pong-0.4.0-alpine
+          image: thepapermen/devopswithkubernetes:ping_pong-0.4.1-alpine
+          volumeMounts:
+            - name: shared-pingpong
+              mountPath: /usr/src/app/files
           env:
             - name: HOST
               value: "0.0.0.0"
@@ -32,4 +30,4 @@ spec:
             - name: ENDPOINT_URL
               value: "/pingpong"
             - name: FILE_PATH
-              value: "/"
+              value: "/usr/src/app/files/pingpong.txt"

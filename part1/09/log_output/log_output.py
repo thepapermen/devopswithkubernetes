@@ -1,18 +1,13 @@
 #!/usr/local/bin/python
 """
-Log output to stdout each 5 secs and serve it as HTTP endpoint on / as well,
-on HOST and PORT env vars, also read and display ping / pong value from file.
+Log output to stdout each 5 secs and serve it on HTTP endpoint on / as well,
+on HOST and PORT env vars.
 """
 import uuid
 import datetime
 import asyncio
 from aiohttp import web
-from aiofile import async_open
 import os
-
-HOST = os.environ['HOST']
-PORT = int(os.environ['PORT'])
-FILE_PATH = os.environ['FILE_PATH']
 
 uuid_output = str(uuid.uuid4())
 
@@ -22,13 +17,11 @@ async def log_output():
         await asyncio.sleep(5)
 
 async def root_handler(request):
-    async with async_open(FILE_PATH, 'r') as afp:
-        return web.Response(
-            text=f'<html><body>\n'
-                f'<h1>{datetime.datetime.now()}: {uuid_output}</h1>\n'
-                f'<h2>Ping / Pongs: {await afp.read()}</h2>\n' 
-                f'</body></html>\n', content_type='text/html',
-        )
+    return web.Response(
+        text=f'<html><body><h1>'
+            f'{datetime.datetime.now()}: {uuid_output}'
+            f'</h1></body></html>', content_type='text/html',
+    )
 async def on_prepare(request, response):
     response.headers['App Name'] = 'Log Output App'
 
@@ -39,7 +32,7 @@ app.on_response_prepare.append(on_prepare)
 async def serve():
     runner = web.AppRunner(app)
     await runner.setup()
-    site = web.TCPSite(runner, host=HOST, port=PORT)
+    site = web.TCPSite(runner, host=os.environ['HOST'], port=int(os.environ['PORT']))
     await site.start()
     await asyncio.Event().wait()
 

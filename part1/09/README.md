@@ -3,15 +3,11 @@ $ kubectl get svc,ing,po
 NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 service/kubernetes   ClusterIP   10.43.0.1    <none>        443/TCP   16h
 
-$ kubectl apply -f ../07/manifests/deployment.yaml 
-deployment.apps/logoutput-dep created
-
-$ kubectl apply -f ../07/manifests/service.yaml 
-service/logoutput-svc created
-
 $ kubectl apply -f manifests/
+deployment.apps/logoutput-dep created
 deployment.apps/pingpong-dep created
 ingress.networking.k8s.io/pingpong-logoutput-ingress created
+service/logoutput-svc created
 service/pingpong-svc created
 
 $ kubectl get svc,ing,po

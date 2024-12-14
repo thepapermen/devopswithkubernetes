@@ -1,9 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: pingpong-logoutput-ingress
-  annotations:
-    nginx.org/rewrites: "serviceName=pingpong-svc rewrite=/"
+  name: pingpong-logoutput-ingress-2
 spec:
   rules:
   - http:
