@@ -1,0 +1,5 @@
+# path where pictures get downloaded when run locally outside of container
+**/media/**
+# default Django db backend generates this file, but it's never usd
+**/db.sqlite3
+**/__pycache__
