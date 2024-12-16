@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pingpong-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pingpong
+  template:
+    metadata:
+      labels:
+        app: pingpong
+    spec:
+      containers:
+        - name: pingpong
+          image: thepapermen/devopswithkubernetes:ping_pong-0.5.0-alpine
+          env:
+            - name: HOST
+              value: "0.0.0.0"
+            - name: PORT
+              value: "3000"
+            - name: ENDPOINT_URL
+              value: "/pingpong"
+            - name: FILE_PATH
+              value: "/usr/src/app/files/pingpong.txt"
