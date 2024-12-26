@@ -130,4 +130,4 @@ Last-Modified: Thu, 26 Dec 2024 17:13:10 GMT
 
 ```
 
-![Frontend](https://github.com/thepapermen/devopswithkubernetes/blob/main/part2/02/Screenshot-from-2024-12-26-18-48-40.png?raw=true Frontend)
+![Frontend](https://raw.githubusercontent.com/thepapermen/devopswithkubernetes/refs/heads/main/part2/02/Screenshot-from-2024-12-26-18-48-40.png Frontend)
