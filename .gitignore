@@ -3,3 +3,8 @@
 # default Django db backend generates this file, but it's never usd
 **/db.sqlite3
 **/__pycache__
+**/node_modules
+**/dist
+**/.venv
+*.local
+**/.python-version

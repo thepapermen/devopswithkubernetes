@@ -23,7 +23,7 @@ async def log_output():
 
 async def root_handler(request):
     async with ClientSession() as session:
-        async with session.get(f'{PINGPONG_URL}') as resp:
+        async with session.get(PINGPONG_URL) as resp:
             count = (await resp.json())['count']
 
             return web.Response(
