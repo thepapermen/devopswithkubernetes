@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: dwk-todo-project-ns
+  name: todo-frontend-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-frontend
+  template:
+    metadata:
+      labels:
+        app: todo-frontend
+    spec:
+      containers:
+        - name: todo-frontend
+          image: thepapermen/devopswithkubernetes:todo-frontend-0.4.0-alpine
+          env:
+            - name: HOST
+              value: "0.0.0.0"
+            - name: PORT
+              value: "3000"
+            - name: IMAGE_LIFE_MINUTES
+              value: "5"
+            - name: MEDIA_ROOT
+              value: "/usr/src/app/files/"

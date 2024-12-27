@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: dwk-todo-project-ns
+  name: todo-image-backend-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-image-backend
+  template:
+    metadata:
+      labels:
+        app: todo-image-backend
+    spec:
+      volumes:
+        - name: shared-image
+          persistentVolumeClaim:
+            claimName: image-claim
+      containers:
+        - name: todo-image-backend
+          image: thepapermen/devopswithkubernetes:image-backend-0.4.0-alpine
+          volumeMounts:
+            - name: shared-image
+              mountPath: /usr/src/app/files
+          env:
+            - name: HOST
+              value: "0.0.0.0"
+            - name: PORT
+              value: "3000"
+            - name: URL
+              value: "/image"
+            - name: IMAGE_LIFE_MINUTES
+              value: "5"
+            - name: MEDIA_ROOT
+              value: "/usr/src/app/files/"
+            - name: IMAGE_SOURCE_URL
+              value: "https://picsum.photos/1200"

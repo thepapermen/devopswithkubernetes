@@ -1,0 +1,6 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dwk-exercise-ns
+  labels:
+    name: dwk-exercise-ns
